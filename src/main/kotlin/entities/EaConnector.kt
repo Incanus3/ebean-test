@@ -2,13 +2,12 @@ package entities
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import io.ebean.annotation.DbName
-import java.io.Serializable
 import javax.persistence.*
 
 @Entity
 @DbName("ea")
 @Table(name = "T_CONNECTOR")
-data class EaConnector(
+class EaConnector(
     @Id
     @Column(name = "CONNECTOR_ID", nullable = false)
     @GeneratedValue(
@@ -28,15 +27,21 @@ data class EaConnector(
 
     @Column(name = "END_OBJECT_ID", nullable = false)
     var endObjectId: Long,
-) : Serializable {
+) {
     @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "START_OBJECT_ID", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(
+        name = "START_OBJECT_ID", referencedColumnName = "OBJECT_ID",
+        nullable = false, insertable = false, updatable = false,
+    )
     var startObject: EaObject? = null
 
     @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "END_OBJECT_ID", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(
+        name = "END_OBJECT_ID", referencedColumnName = "OBJECT_ID",
+        nullable = false, insertable = false, updatable = false,
+    )
     var endObject: EaObject? = null
 
     override fun equals(other: Any?): Boolean = other is EaConnector && other.id == this.id
