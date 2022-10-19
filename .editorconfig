@@ -1,0 +1,30 @@
+[*.{kt,kts}]
+
+# possible values: number (e.g. 2), "unset" (makes ktlint ignore indentation completely)
+indent_size=4
+
+# true (recommended) / false
+insert_final_newline=true
+
+# possible values: number (e.g. 120) (package name, imports & comments are ignored), "off"
+# it's automatically set to 100 on `ktlint --android ...` (per Android Kotlin Style Guide)
+max_line_length=120
+ij_visual_guides=100
+ij_kotlin_allow_trailing_comma = true
+ij_kotlin_allow_trailing_comma_on_call_site = true
+
+# Disabled rules for our project
+disabled_rules=no-wildcard-imports
+
+[*.java]
+
+# possible values: number (e.g. 2), "unset" (makes ktlint ignore indentation completely)
+indent_size=4
+
+# true (recommended) / false
+insert_final_newline=true
+
+# possible values: number (e.g. 120) (package name, imports & comments are ignored), "off"
+# it's automatically set to 100 on `ktlint --android ...` (per Android Kotlin Style Guide)
+max_line_length=120
+ij_visual_guides=100
