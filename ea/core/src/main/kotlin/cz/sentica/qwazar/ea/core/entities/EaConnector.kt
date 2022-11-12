@@ -1,4 +1,4 @@
-package entities
+package cz.sentica.qwazar.ea.core.entities
 
 import io.ebean.annotation.DbName
 import io.ebean.annotation.JsonIgnore
@@ -13,7 +13,6 @@ class EaConnector(
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     var id: Long = 0,
 
-    // these are used only by the Db implementation
     @Column(name = "START_OBJECT_ID", nullable = false)
     var startObjectId: Long,
 

@@ -1,3 +1,3 @@
+rootProject.name = "qwazar"
 
-rootProject.name = "ebean-test"
-
+include(":ea:core", ":ea:db")
