@@ -1,7 +1,7 @@
 package entities
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import io.ebean.annotation.DbName
+import io.ebean.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
@@ -10,15 +10,7 @@ import javax.persistence.*
 class EaConnector(
     @Id
     @Column(name = "CONNECTOR_ID", nullable = false)
-    @GeneratedValue(
-        strategy = GenerationType.SEQUENCE,
-        generator = "t_connector_sequence_generator",
-    )
-    @SequenceGenerator(
-        name = "t_connector_sequence_generator",
-        sequenceName = "CONNECTOR_ID_SEQ",
-        allocationSize = 1,
-    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     var id: Long = 0,
 
     // these are used only by the Db implementation

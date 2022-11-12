@@ -22,16 +22,16 @@ plugins {
 dependencies {
     val kotlinVersion = "1.7.21"
     val ebeanVersion = "13.10.1"
+    val kotestVersion = "5.5.4"
 
     implementation(kotlin("stdlib", kotlinVersion))
     implementation(kotlin("reflect", kotlinVersion))
 
     implementation("io.ebean:ebean:$ebeanVersion")
     implementation("org.slf4j:slf4j-nop:2.0.3")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.0")
 
     testImplementation(kotlin("test"))
-    testImplementation("io.kotest:kotest-assertions-core-jvm:5.5.4")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion")
     testImplementation("io.ebean:ebean-test:$ebeanVersion")
 
     testRuntimeOnly("com.h2database:h2")
