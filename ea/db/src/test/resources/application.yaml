@@ -1,0 +1,10 @@
+spring:
+  main:
+    banner-mode: "off"
+
+datasource:
+  ea:
+    username: sa
+    password: sa
+    url: jdbc:h2:mem:eadb
+    driver: org.h2.Driver

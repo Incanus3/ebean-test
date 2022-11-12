@@ -1,51 +1,48 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
+group = "cz.sentica.qwazar"
 
-java.sourceCompatibility = JavaVersion.VERSION_17
+plugins {
+    val kotlinVersion = "1.7.21"
+    val ebeanVersion = "13.6.5" // version "13.6.4" is the last for which this works
+
+    id("java")
+    id("io.ebean") version ebeanVersion apply(false)
+
+    kotlin("jvm") version kotlinVersion apply(false)
+    kotlin("kapt") version kotlinVersion apply(false)
+}
 
 repositories {
     mavenCentral()
 }
 
-plugins {
+subprojects {
     val kotlinVersion = "1.7.21"
-    val ebeanVersion = "13.10.1"
+    val ebeanVersion = "13.6.5"
 
-    kotlin("jvm") version kotlinVersion
-    kotlin("kapt") version kotlinVersion
+    apply(plugin = "java")
+    apply(plugin = "kotlin")
+    // apply(plugin = "kotlin-kapt") // can be enabled either here or in subproject, but if not all
+    // apply(plugin = "io.ebean")    // subprojects use ebean, it's better to do it there
 
-    id("io.ebean") version ebeanVersion
-}
+    java.sourceCompatibility = JavaVersion.VERSION_17
 
-dependencies {
-    val kotlinVersion = "1.7.21"
-    val ebeanVersion = "13.10.1"
-    val kotestVersion = "5.5.4"
+    repositories {
+        mavenCentral()
+    }
 
-    implementation(kotlin("stdlib", kotlinVersion))
-    implementation(kotlin("reflect", kotlinVersion))
+    ext["ebeanVersion"] = ebeanVersion
 
-    implementation("io.ebean:ebean:$ebeanVersion")
-    implementation("org.slf4j:slf4j-nop:2.0.3")
+    dependencies {
+        implementation(kotlin("stdlib", kotlinVersion))
+        // implementation(kotlin("reflect", kotlinVersion))
+    }
 
-    testImplementation(kotlin("test"))
-    testImplementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion")
-    testImplementation("io.ebean:ebean-test:$ebeanVersion")
-
-    testRuntimeOnly("com.h2database:h2")
-
-    kapt("io.ebean:kotlin-querybean-generator:$ebeanVersion")
-}
-
-tasks.test {
-    useJUnitPlatform()
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = freeCompilerArgs + "-Xjsr305=strict"
-        jvmTarget = "17"
+    tasks.withType<KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs = freeCompilerArgs + "-Xjsr305=strict"
+            jvmTarget = "17"
+        }
     }
 }

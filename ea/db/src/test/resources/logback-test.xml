@@ -21,7 +21,7 @@
   <logger name="io.ebean.DDL" level="WARN"/>
 
   <!-- sql and transaction logging -->
-  <logger name="io.ebean.SQL" level="DEBUG"/>
+  <logger name="io.ebean.SQL" level="WARN"/>
   <logger name="io.ebean.TXN" level="WARN"/>
   <!-- <logger name="io.ebean.SUM" level="WARN"/> -->
 

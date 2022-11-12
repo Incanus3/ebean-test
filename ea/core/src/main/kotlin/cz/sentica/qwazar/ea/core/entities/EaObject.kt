@@ -1,4 +1,4 @@
-package entities
+package cz.sentica.qwazar.ea.core.entities
 
 import io.ebean.annotation.DbName
 import io.ebean.annotation.JsonIgnore
