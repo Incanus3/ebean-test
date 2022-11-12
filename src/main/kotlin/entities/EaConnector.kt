@@ -29,19 +29,13 @@ class EaConnector(
     var endObjectId: Long,
 ) {
     @JsonIgnore
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(
-        name = "START_OBJECT_ID", referencedColumnName = "OBJECT_ID",
-        nullable = false, insertable = false, updatable = false,
-    )
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "START_OBJECT_ID", nullable = false, insertable = false, updatable = false)
     var startObject: EaObject? = null
 
     @JsonIgnore
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(
-        name = "END_OBJECT_ID", referencedColumnName = "OBJECT_ID",
-        nullable = false, insertable = false, updatable = false,
-    )
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "END_OBJECT_ID", nullable = false, insertable = false, updatable = false)
     var endObject: EaObject? = null
 
     override fun equals(other: Any?): Boolean = other is EaConnector && other.id == this.id

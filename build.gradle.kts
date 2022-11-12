@@ -10,8 +10,8 @@ repositories {
 }
 
 plugins {
-    val kotlinVersion = "1.7.20"
-    val ebeanVersion = "13.10.0"
+    val kotlinVersion = "1.7.21"
+    val ebeanVersion = "13.10.1"
 
     kotlin("jvm") version kotlinVersion
     kotlin("kapt") version kotlinVersion
@@ -20,18 +20,18 @@ plugins {
 }
 
 dependencies {
-    val kotlinVersion = "1.7.20"
-    val ebeanVersion = "13.10.0"
+    val kotlinVersion = "1.7.21"
+    val ebeanVersion = "13.10.1"
 
     implementation(kotlin("stdlib", kotlinVersion))
     implementation(kotlin("reflect", kotlinVersion))
 
     implementation("io.ebean:ebean:$ebeanVersion")
     implementation("org.slf4j:slf4j-nop:2.0.3")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.4")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.0")
 
     testImplementation(kotlin("test"))
-    testImplementation("io.kotest:kotest-assertions-core-jvm:5.5.1")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:5.5.4")
     testImplementation("io.ebean:ebean-test:$ebeanVersion")
 
     testRuntimeOnly("com.h2database:h2")
@@ -44,5 +44,8 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "17"
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + "-Xjsr305=strict"
+        jvmTarget = "17"
+    }
 }

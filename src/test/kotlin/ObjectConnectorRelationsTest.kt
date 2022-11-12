@@ -43,7 +43,6 @@ class ObjectConnectorRelationsTest {
         object1.outgoingConnections shouldBe emptyList()
 
         // this has the same problem
-        // val reloadedObject1 = database.createQuery(EaObject::class.java).where().idEq(object1.id).findOne()!!
         val reloadedObject1 = database.find(EaObject::class.java, object1.id)!!
         val reloadedConnection = database.find(EaConnector::class.java, connection.id)!!
 

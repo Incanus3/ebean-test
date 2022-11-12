@@ -3,6 +3,7 @@ package entities
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import io.ebean.annotation.DbName
+import java.io.Serializable
 import javax.persistence.*
 
 @Entity
@@ -24,12 +25,12 @@ class EaObject(
     var name: String? = null,
 ) {
     @JsonIgnore
-    @OneToMany(mappedBy = "startObject", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    var outgoingConnections: List<EaConnector> = emptyList()
+    @OneToMany(mappedBy = "startObject", cascade = [CascadeType.ALL])
+    var outgoingConnections: List<EaConnector> = arrayListOf()
 
     @JsonIgnore
-    @OneToMany(mappedBy = "endObject", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    var incomingConnections: List<EaConnector> = emptyList()
+    @OneToMany(mappedBy = "endObject", cascade = [CascadeType.ALL])
+    var incomingConnections: List<EaConnector> = arrayListOf()
 
     override fun equals(other: Any?): Boolean = other is EaObject && other.id == this.id
     override fun hashCode(): Int = id.hashCode()
