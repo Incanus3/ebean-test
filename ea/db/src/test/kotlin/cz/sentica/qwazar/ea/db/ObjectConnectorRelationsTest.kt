@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
 class ObjectConnectorRelationsTest {
     private fun dbConfig() = DatabaseConfig().apply {
         name = "ea"
-        packages = listOf("entities")
+        packages = listOf("cz.sentica.qwazar.ea.core.entities")
 
         isDdlRun = true
         isDdlGenerate = true
