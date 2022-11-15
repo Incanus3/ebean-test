@@ -18,6 +18,11 @@ dependencies {
     testRuntimeOnly("com.h2database:h2")
 
     kapt("io.ebean:kotlin-querybean-generator:${project.ext["ebeanVersion"]}")
+    kaptTest("io.ebean:kotlin-querybean-generator:${project.ext["ebeanVersion"]}")
+}
+
+ebean {
+    debugLevel = 5
 }
 
 tasks.test {
