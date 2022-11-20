@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test
 class TestEntityEnhancementTest {
     private fun dbConfig() = DatabaseConfig().apply {
         name = "ea"
-        packages = listOf("cz.sentica.qwazar.ea.db.test")
+        // packages = listOf("cz.sentica.qwazar.ea.db.test")
+        classes = listOf(TestEntity::class.java)
 
         isDdlRun = true
         isDdlGenerate = true

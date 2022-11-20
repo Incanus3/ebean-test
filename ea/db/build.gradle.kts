@@ -3,6 +3,7 @@ group = "cz.sentica.qwazar.ea"
 plugins {
     kotlin("kapt")
     id("io.ebean")
+    id("java-test-fixtures")
 }
 
 dependencies {
