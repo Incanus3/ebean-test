@@ -109,7 +109,11 @@ class EnhancePlugin implements Plugin<Project> {
 
     Set<File> projectOutputDirs = new HashSet<>()
 
-    if (task instanceof AbstractCompile || 'compileKotlin'.equalsIgnoreCase(task.name)) {
+    if (
+      task instanceof AbstractCompile ||
+      'compileKotlin'.equalsIgnoreCase(task.name) ||
+      'compileTestKotlin'.equalsIgnoreCase(task.name)
+    ) {
       projectOutputDirs.addAll(task.outputs.files)
     } else {
       return
