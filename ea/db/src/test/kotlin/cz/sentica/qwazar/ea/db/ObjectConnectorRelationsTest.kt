@@ -6,8 +6,9 @@ import io.ebean.Database
 import io.ebean.DatabaseFactory
 import io.ebean.config.DatabaseConfig
 import io.ebean.datasource.DataSourceConfig
-import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 class ObjectConnectorRelationsTest {
     private fun dbConfig() = DatabaseConfig().apply {
@@ -40,9 +41,9 @@ class ObjectConnectorRelationsTest {
         database.save(connection)
 
         // relations aren't populated on save
-        connection.startObject shouldBe null
-        connection.endObject shouldBe null
-        object1.outgoingConnections shouldBe emptyList()
+        assertNull(connection.startObject)
+        assertNull(connection.endObject)
+        assertEquals(object1.outgoingConnections, emptyList())
 
         // this has the same problem
         // val reloadedObject1 = database.createQuery(EaObject::class.java).where().idEq(object1.id).findOne()!!
@@ -50,8 +51,8 @@ class ObjectConnectorRelationsTest {
         val reloadedConnection = database.find(EaConnector::class.java, connection.id)!!
 
         // relations are populated on reload
-        reloadedConnection.startObject shouldBe object1
-        reloadedConnection.endObject shouldBe object2
-        reloadedObject1.outgoingConnections shouldBe listOf(connection)
+        assertEquals(reloadedConnection.startObject, object1)
+        assertEquals(reloadedConnection.endObject, object2)
+        assertEquals(reloadedObject1.outgoingConnections, listOf(connection))
     }
 }

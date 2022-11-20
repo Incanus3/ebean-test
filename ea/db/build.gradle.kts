@@ -12,7 +12,6 @@ dependencies {
     implementation("org.slf4j:slf4j-nop:2.0.3")
 
     testImplementation(kotlin("test"))
-    testImplementation("io.kotest:kotest-assertions-core-jvm:5.3.2")
     testImplementation("io.ebean:ebean-test:${project.ext["ebeanVersion"]}")
 
     testRuntimeOnly("com.h2database:h2")
