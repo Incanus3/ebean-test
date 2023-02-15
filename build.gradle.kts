@@ -4,10 +4,10 @@ group = "cz.sentica.qwazar"
 
 plugins {
     val kotlinVersion = "1.7.21"
-    val ebeanVersion = "13.10.1" // version "13.6.4" is the last for which this works
+    val ebeanVersion = "13.11.3"
 
     id("java")
-    // id("io.ebean") version ebeanVersion apply(false)
+    id("io.ebean") version ebeanVersion apply(false)
 
     kotlin("jvm") version kotlinVersion apply(false)
     kotlin("kapt") version kotlinVersion apply(false)
@@ -19,7 +19,7 @@ repositories {
 
 subprojects {
     val kotlinVersion = "1.7.21"
-    val ebeanVersion = "13.10.1"
+    val ebeanVersion = "13.11.3"
 
     apply(plugin = "java")
     apply(plugin = "kotlin")

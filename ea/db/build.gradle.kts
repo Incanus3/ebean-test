@@ -15,14 +15,14 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("io.ebean:ebean-test:${project.ext["ebeanVersion"]}")
 
-    testRuntimeOnly("com.h2database:h2")
+    testRuntimeOnly("com.h2database:h2:2.1.214")
 
     kapt("io.ebean:kotlin-querybean-generator:${project.ext["ebeanVersion"]}")
     kaptTest("io.ebean:kotlin-querybean-generator:${project.ext["ebeanVersion"]}")
 }
 
 ebean {
-    debugLevel = 5
+    debugLevel = 2
 }
 
 tasks.test {

@@ -13,7 +13,7 @@ dependencies {
 }
 
 ebean {
-    debugLevel = 5
+    debugLevel = 2
 }
 
 tasks.test {
