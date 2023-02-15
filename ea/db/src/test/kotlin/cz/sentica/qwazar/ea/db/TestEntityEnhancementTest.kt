@@ -6,11 +6,14 @@ import io.ebean.DatabaseFactory
 import io.ebean.config.DatabaseConfig
 import io.ebean.datasource.DataSourceConfig
 import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
 class TestEntityEnhancementTest {
     private fun dbConfig() = DatabaseConfig().apply {
         name = "ea"
         packages = listOf("cz.sentica.qwazar.ea.db.test")
+        // doesn't find it without this
+        classes = listOf(TestEntity::class.java)
 
         isDdlRun = true
         isDdlGenerate = true
@@ -33,7 +36,6 @@ class TestEntityEnhancementTest {
 
         database.saveAll(object1, object2)
 
-        println(object1.id)
-        println(database.find(TestEntity::class.java, object1.id))
+        assertEquals("object1", database.find(TestEntity::class.java, object1.id)?.name)
     }
 }
