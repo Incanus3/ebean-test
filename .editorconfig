@@ -1,30 +1,40 @@
+root = true
+
 [*.{kt,kts}]
 
-# possible values: number (e.g. 2), "unset" (makes ktlint ignore indentation completely)
-indent_size=4
+charset = utf-8
+end_of_line = lf
+indent_size = 4
+indent_style = space
 
-# true (recommended) / false
-insert_final_newline=true
+insert_final_newline = true
+spaces_around_operators = true
+trim_trailing_whitespace = true
 
-# possible values: number (e.g. 120) (package name, imports & comments are ignored), "off"
-# it's automatically set to 100 on `ktlint --android ...` (per Android Kotlin Style Guide)
-max_line_length=120
-ij_visual_guides=100
+max_line_length = 120
+ij_visual_guides = 100
 ij_kotlin_allow_trailing_comma = true
 ij_kotlin_allow_trailing_comma_on_call_site = true
 
-# Disabled rules for our project
-disabled_rules=no-wildcard-imports
+# or android_studio or ktlint_official (default)
+ktlint_code_style = intellij_idea
 
-[*.java]
-
-# possible values: number (e.g. 2), "unset" (makes ktlint ignore indentation completely)
-indent_size=4
-
-# true (recommended) / false
-insert_final_newline=true
-
-# possible values: number (e.g. 120) (package name, imports & comments are ignored), "off"
-# it's automatically set to 100 on `ktlint --android ...` (per Android Kotlin Style Guide)
-max_line_length=120
-ij_visual_guides=100
+ktlint_standard_annotation = disabled
+ktlint_standard_enum-wrapping = disabled
+ktlint_standard_comment-wrapping = disabled
+ktlint_standard_if-else-wrapping = disabled
+ktlint_standard_multiline-if-else = disabled
+ktlint_standard_statement-wrapping = disabled
+ktlint_standard_function-signature = disabled
+ktlint_standard_annotation-spacing = disabled
+ktlint_standard_no-wildcard-imports = disabled
+ktlint_standard_no-blank-line-in-list = disabled
+ktlint_standard_string-template-indent = disabled
+ktlint_standard_argument-list-wrapping = disabled
+ktlint_standard_type-argument-comment = disabled
+ktlint_standard_value-argument-comment = disabled
+ktlint_standard_value-parameter-comment = disabled
+ktlint_standard_multiline-expression-wrapping = disabled
+ktlint_standard_blank-line-before-declaration = disabled
+ktlint_standard_spacing-between-declarations-with-comments = disabled
+ktlint_standard_spacing-between-declarations-with-annotations = disabled

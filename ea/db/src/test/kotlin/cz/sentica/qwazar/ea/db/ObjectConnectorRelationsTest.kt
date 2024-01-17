@@ -11,20 +11,22 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class ObjectConnectorRelationsTest {
-    private fun dbConfig() = DatabaseConfig().apply {
-        name = "ea"
-        packages = listOf("cz.sentica.qwazar.ea.core.entities")
+    private fun dbConfig() = DatabaseConfig().also { databaseConfig ->
+        databaseConfig.name = "ea"
+        databaseConfig.packages = listOf("cz.sentica.qwazar.ea.core.entities")
 
-        isDdlRun = true
-        isDdlGenerate = true
-        isDefaultServer = false
+        databaseConfig.isDdlRun = true
+        databaseConfig.isDdlGenerate = true
+        databaseConfig.isDefaultServer = false
 
-        dataSourceConfig = DataSourceConfig().apply {
-            username = "test"
-            password = "test"
-            url = "jdbc:h2:mem:test"
-            driver = "org.h2.Driver"
-        }
+        databaseConfig.setDataSourceConfig(
+            DataSourceConfig().also {
+                it.username = "test"
+                it.password = "test"
+                it.url = "jdbc:h2:mem:test"
+                it.driver = "org.h2.Driver"
+            },
+        )
     }
 
     private val database: Database = DatabaseFactory.create(dbConfig())
