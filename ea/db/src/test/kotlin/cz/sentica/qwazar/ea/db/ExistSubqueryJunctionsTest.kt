@@ -30,24 +30,90 @@ class ExistSubqueryJunctionsTest {
     private val database: Database = DatabaseFactory.create(dbConfig())
 
     @Test
-    fun `withChildOrDirectContainedObject(queryBuilder)`() {
-        val childSubQuery = QEaObject(database).stereotype.eq("car")
-        val containedSubQuery = QEaObject(database).stereotype.eq("car")
-        val containerPackageSubQuery = QEaPackage(database).alias("container").exists(
-            containedSubQuery.alias("contained")
-                .raw("contained.PACKAGE_ID = container.PACKAGE_ID").query(),
-        )
-
-        // FIXME: for some reason, this generates AND instead of OR
+    fun `child or contained`() {
+        // FIXME: this generates AND instead of OR
         QEaObject(database)
+            .alias("parent")
             .or()
-            .alias("parent").exists(
+            .exists(
                 childSubQuery.alias("child")
                     .raw("child.PARENTID = parent.OBJECT_ID").query(),
             )
-            .eaGuid.isIn(containerPackageSubQuery.select(QEaPackage._alias.eaGuid).query())
+            .eaGuid.isIn(containingPackageSubQuery.select(QEaPackage._alias.eaGuid).query())
             .endOr()
             .select(QEaObject._alias.id)
-            .findList().forEach(::println)
+            .findList()
+
+        // -- produced query is
+        // select parent.OBJECT_ID from T_OBJECT parent where (
+        //   parent.EA_GUID in (
+        //     select container.EA_GUID from T_PACKAGE container where exists (
+        //       select 1 from T_OBJECT contained
+        //       where contained.STEREOTYPE = ? and contained.PACKAGE_ID = container.PACKAGE_ID
+        //     )
+        //   )
+        // ) AND exists (
+        //   select 1 from T_OBJECT child
+        //   where child.STEREOTYPE = ? and child.PARENTID = parent.OBJECT_ID
+        // ); --bind(car,car)
     }
+
+    @Test
+    fun `contained or child`() {
+        // FIXME: this generates AND instead of OR
+        QEaObject(database)
+            .alias("parent")
+            .or()
+            .eaGuid.isIn(containingPackageSubQuery.select(QEaPackage._alias.eaGuid).query())
+            .exists(
+                childSubQuery.alias("child")
+                    .raw("child.PARENTID = parent.OBJECT_ID").query(),
+            )
+            .endOr()
+            .select(QEaObject._alias.id)
+            .findList()
+
+        // -- produced query is
+        // select parent.OBJECT_ID from T_OBJECT parent where (
+        //   parent.EA_GUID in (
+        //     select container.EA_GUID from T_PACKAGE container where exists (
+        //       select 1 from T_OBJECT contained
+        //       where contained.STEREOTYPE = ? and contained.PACKAGE_ID = container.PACKAGE_ID
+        //     )
+        //   )
+        // ) AND exists (
+        //   select 1 from T_OBJECT child
+        //   where child.STEREOTYPE = ? and child.PARENTID = parent.OBJECT_ID
+        // ); --bind(car,car)
+        // -- same as above
+    }
+
+    @Test
+    fun `no exists`() {
+        // this correctly generates OR
+        QEaObject(database)
+            .alias("parent")
+            .or()
+            .name.isIn("some", "whitelisted", "names")
+            .eaGuid.isIn(containingPackageSubQuery.select(QEaPackage._alias.eaGuid).query())
+            .endOr()
+            .select(QEaObject._alias.id)
+            .findList()
+
+        // -- produced query is
+        // select parent.OBJECT_ID from T_OBJECT parent where (
+        //   parent.NAME in (?,?,?) OR parent.EA_GUID in (
+        //     select container.EA_GUID from T_PACKAGE container where exists (
+        //       select 1 from T_OBJECT contained where contained.STEREOTYPE = ? and contained.PACKAGE_ID = container.PACKAGE_ID
+        //     )
+        //   )
+        // ); --bind(Array[3]={some,whitelisted,names},car)
+        // -- which is correct, both in junction used and in order
+    }
+
+    private val childSubQuery get() = QEaObject(database).stereotype.eq("car")
+    private val containingPackageSubQuery get() = QEaPackage(database).alias("container").exists(
+        childSubQuery.alias("contained")
+            .raw("contained.PACKAGE_ID = container.PACKAGE_ID").query(),
+    )
 }
